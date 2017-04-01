@@ -9,4 +9,3 @@ mklink _vimrc github\settings-win\_vimrc
 mklink /d .vim github\settings-win\.vim
 ```
 
-
