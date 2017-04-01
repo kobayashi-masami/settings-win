@@ -1,0 +1,221 @@
+[[plugins]] # Deinでvimのパッケージ管理 # {{{
+repo = 'Shougo/dein.vim'
+# http://tti.matrix.jp/blog/2016-04-19/dein-vim%E3%81%A7%E6%9C%AA%E4%BD%BF%E7%94%A8%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E5%AE%9A%E7%BE%A9/
+# echo dein#check_clean() で削除対象を確認できる
+# DeinClean で削除する
+rtp = ''
+hook_add = 'source ~/.vim/rc/plugins/dein.rc.vim'
+# }}}
+
+[[plugins]]# {{{
+repo = 'plasticboy/vim-markdown'
+on_ft = 'mkd'
+hook_add = '''
+  " https://github.com/plasticboy/vim-markdown
+  au BufNewFile,BufRead nested *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+  "au DEIN_HOOK VimEnter * nested let g:vim_markdown_folding_disabled=1
+  au DEIN_HOOK VimEnter * nested let g:vim_markdown_folding_level = 2
+  au DEIN_HOOK VimEnter * nested let g:vim_markdown_toc_autofit = 1
+  au DEIN_HOOK VimEnter * nested let g:vim_markdown_new_list_item_indent = 2
+'''
+# }}}
+
+[[plugins]]# {{{
+repo = 'kannokanno/previm'
+hook_add = '''
+  "ブラウザの設定 -> open-browserで設定するので不要
+  "au DEIN_HOOK VimEnter * nested let g:previm_open_cmd = 'open -a C:/Program\ Files\ (x86)/Google/Chrome/Application/chrome.exe'
+  " <F5>で編集中のファイルをブラウザで表示
+  au DEIN_HOOK VimEnter * nested nmap <F5> :PrevimOpen<CR>
+'''
+# }}}
+
+[[plugins]]# {{{
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+  au DEIN_HOOK VimEnter * nested let g:netrw_nogx = 1
+  au DEIN_HOOK VimEnter * nested nmap gx (openbrowser-smart-search)
+  au DEIN_HOOK VimEnter * nested vmap gx (openbrowser-smart-search)
+  au DEIN_HOOK VimEnter * nested let g:openbrowser_browser_commands = [{"name": "chrome","args": ["{browser}","{uri}"]}]
+'''
+# }}}
+
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える# {{{
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+# }}}
+
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ# {{{
+repo = 'Shougo/context_filetype.vim'
+# }}}
+
+[[plugins]] # toml syntax# {{{
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+# }}}
+
+[[plugins]] # カラースキーマ# {{{
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  set background=dark
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  au DEIN_HOOK VimEnter * nested colorscheme hybrid
+  au DEIN_HOOK VimEnter * nested syntax on
+'''
+# }}}
+
+[[plugins]] # ステータスラインの表示内容強化# {{{
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  set laststatus=2 " ステータスラインを常に表示
+  set showmode     " 現在のモードを表示
+  set showcmd      " 打ったコマンドをステータスラインの下に表示
+  set ruler        " ステータスラインの右側にカーソルの現在位置を表示する
+'''
+# }}}
+
+# [[plugins]] # インデントの可視化# {{{
+# repo = 'Yggdroot/indentLine'
+# # }}}
+
+[[plugins]] # インデントの可視化# {{{
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+  au DEIN_HOOK VimEnter * nested let g:indent_guides_enable_on_vim_startup = 1
+  au DEIN_HOOK VimEnter * nested let g:indent_guides_start_level = 2
+  au DEIN_HOOK VimEnter * nested let g:indent_guides_guide_size = 1
+  au DEIN_HOOK VimEnter * nested let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar', 'unite']
+'''
+# }}}
+
+[[plugins]] # コメントアウト・非コメントアウトが簡単に行えるようになる。# {{{
+repo = 'tpope/vim-commentary'
+hook_add = '''
+  au DEIN_HOOK VimEnter * nested vmap  gc
+'''
+# }}}
+
+[[plugins]] # unite# {{{
+repo = 'Shougo/unite.vim'
+# }}}
+
+[[plugins]] # neomru# {{{
+repo = 'Shougo/neomru.vim'
+# }}}
+
+[[plugins]] # vimfiler# {{{
+repo = 'Shougo/vimfiler.vim'
+depends = ['Shougo/unite.vim']
+hook_add = '''
+  au DEIN_HOOK VimEnter * nested nnoremap <leader>e :VimFilerExplore -split -winwidth=30 -find -no-quit<Cr>
+'''
+# }}}
+
+[[plugins]] # テキストを整列# {{{
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+  " http://baqamore.hatenablog.com/entry/2015/06/27/074459
+  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+  au DEIN_HOOK VimEnter * nested vmap  <Plug>(EasyAlign)
+  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+  au DEIN_HOOK VimEnter * nested nmap ga <Plug>(EasyAlign)
+'''
+# }}}
+
+[[plugins]] # 多機能セレクタ# {{{
+repo = 'ctrlpvim/ctrlp.vim'
+hook_add = '''
+  au DEIN_HOOK VimEnter * nested let g:ctrlp_match_window = 'top,order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
+  au DEIN_HOOK VimEnter * nested let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
+  au DEIN_HOOK VimEnter * nested let g:ctrlp_types = ['fil'] "ファイル検索のみ使用
+  au DEIN_HOOK VimEnter * nested let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使用
+'''
+# }}}
+
+[[plugins]] # CtrlPの拡張プラグイン. 関数検索# {{{
+repo = 'tacahiroy/ctrlp-funky'
+depends = ['ctrlpvim/ctrlp.vim']
+hook_add = '''
+  " CtrlPCommandLineの有効化
+  au DEIN_HOOK VimEnter * nested command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
+'''
+# }}}
+
+[[plugins]] # CtrlPの拡張プラグイン. コマンド履歴検索# {{{
+repo = 'suy/vim-ctrlp-commandline'
+depends = ['ctrlpvim/ctrlp.vim']
+hook_add = '''
+  " CtrlPFunkyの有効化
+  au DEIN_HOOK VimEnter * nested let g:ctrlp_funky_matchtype = 'path'
+'''
+# }}}
+
+[[plugins]] # 末尾の全角と半角の空白文字を赤くハイライト# {{{
+repo = 'bronson/vim-trailing-whitespace'
+hook_add = '''
+  " https://github.com/bronson/vim-trailing-whitespace/blob/master/plugin/trailing-whitespace.vim
+  au DEIN_HOOK VimEnter * nested let g:extra_whitespace_ignored_filetypes = ['help', 'vimfiler']
+'''
+# }}}
+
+# [[plugins]] # CtrlPの検索にagを使う"{{{
+# repo = 'rking/ag.vim'
+# depends = ['ctrlpvim/ctrlp.vim']
+# hook_add = '''
+#   " au DEIN_HOOK VimEnter * nested let g:ctrlp_use_caching=0                          " CtrlPのキャッシュを使わない
+#   " au DEIN_HOOK VimEnter * nested let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
+# '''
+# "}}}
+
+[[plugins]] # quickrun.vim# {{{
+repo = 'thinca/vim-quickrun'
+hook_add = '''
+  " http://d.hatena.ne.jp/osyo-manga/20130311/1363012363
+  au DEIN_HOOK VimEnter * nested let g:quickrun_config={'_': {'split': 'vertical'}} "
+  au DEIN_HOOK VimEnter * nested set splitright                                     "
+  au DEIN_HOOK VimEnter * nested nmap  :QuickRun<CR>
+  au DEIN_HOOK VimEnter * nested vmap  :QuickRun<CR>
+'''
+# }}}
+
+# チート {{{
+## 基本は github.com のレポジトリーを指定するだけ
+#[[plugins]]
+#repo = 'Shougo/dein.vim'
+#
+## git clone 後、実行すべきコマンドがある場合はこんな感じ
+#[[plugins]]
+#repo = 'Shougo/vimproc.vim'
+#hook_post_update = '''
+#  if dein#util#_is_windows()
+#    let cmd = 'tools\\update-dll-mingw'
+#  elseif dein#util#_is_cygwin()
+#    let cmd = 'make -f make_cygwin.mak'
+#  elseif executable('gmake')
+#    let cmd = 'gmake'
+#  else
+#    let cmd = 'make'
+#  endif
+#  let g:dein#plugin.build = cmd
+#'''
+#
+## ブランチやタグを指定したいとき
+#[[plugins]]
+#repo = 'delphinus35/typescript-vim'
+#rev  = 'colorize-template-strings'
+#
+## 特定の条件で読み込みたいとき
+#[[plugins]]
+#repo = 'elzr/vim-json'
+#if   = '''! has('kaoriya')'''
+#
+## 依存関係を指定したいとき
+#[[plugins]]
+#repo    = 'vim-airline/vim-airline'
+#depends = ['vim-airline-themes']
+#
+## 依存関係を指定したからと言って、自動でインストールはされない（ここは NeoBundle と違う）
+#[[plugins]]
+#repo = 'vim-airline/vim-airline-themes'# }}}
+
